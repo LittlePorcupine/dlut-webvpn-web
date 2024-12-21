@@ -14,11 +14,11 @@
 ## 功能特点
 
 - 🚀 快速将普通 URL 转换为 WebVPN URL
-- 🎨 简洁优雅的用户界面
-- 📱 完美支持移动端适配
-- 🔒 安全的 AES 加密实现
 - ⚡ 基于 Vercel 部署，访问快速
 - 🌐 支持所有校内资源链接转换
+<p align="center">
+  <img src="./assets/demo.png" alt="DLUT WebVPN 转换器演示" width="800">
+</p>
 
 ## DEMO
 
