@@ -56,10 +56,6 @@
 └── vercel.json          # Vercel 配置
 ```
 
-## 安全性说明
-
-本项目使用 AES-CFB 模式进行加密，密钥和向量已经在代码中配置。
-
 ## 贡献指南
 
 欢迎提交 Issue 和 Pull Request。
