@@ -72,7 +72,7 @@
 
 - [ESWZY/webvpn-dlut](https://github.com/ESWZY/webvpn-dlut) - 本项目的核心实现参考
 - 感谢大连理工大学提供的 WebVPN 服务
-- [dlut-survival-tools](https://github.com/BeautyYuYanli/dlut-survival-tools) - 一些与大连理工大学相关的工具集
+- [dlut-survival-tools](https://github.com/NAOSI-DLUT/dlut-survival-tools) - 一些与大连理工大学相关的工具集
 
 ## 免责声明
 
