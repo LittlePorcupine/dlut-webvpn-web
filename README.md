@@ -22,7 +22,7 @@
 
 ## DEMO
 
-访问：
+访问：https://vpn.dlut.tech/
 
 ## 快速部署
 
