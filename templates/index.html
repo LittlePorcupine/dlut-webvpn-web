@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DLUT WebVPN URL 转换器</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --coral: #C85D44;
+            --coral-hover: #B54935;
+            --text-primary: #2D3338;
+            --text-secondary: #6C7275;
+            --background: #FAF9F6;
+            --input-border: #E3E5E5;
+            --input-focus: #2D3338;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Sora', system-ui, -apple-system, sans-serif;
+            background-color: var(--background);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 540px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        .subtitle {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+        }
+
+        .card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            margin-bottom: 2rem;
+        }
+
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            font-size: 1rem;
+            border: 1.5px solid var(--input-border);
+            border-radius: 0.5rem;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        input[type="text"]:focus {
+            outline: none;
+            border-color: var(--input-focus);
+        }
+
+        button {
+            width: 100%;
+            padding: 0.875rem 1.5rem;
+            font-size: 1rem;
+            font-weight: 500;
+            color: white;
+            background-color: var(--coral);
+            border: none;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            font-family: inherit;
+            margin-top: 1rem;
+        }
+
+        button:hover {
+            background-color: var(--coral-hover);
+        }
+
+        .result {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            background-color: var(--background);
+            border-radius: 0.5rem;
+            text-align: left;
+        }
+
+        .result-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .copy-button {
+            background: none;
+            border: none;
+            color: var(--coral);
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.375rem;
+        }
+
+        .result-text {
+            font-family: monospace;
+            word-break: break-all;
+            padding: 0.75rem;
+            background: white;
+            border-radius: 0.375rem;
+            border: 1px solid var(--input-border);
+            font-size: 0.875rem;
+        }
+
+        .footer {
+            margin-top: auto;
+            color: var(--text-secondary);
+            font-size: 0.875rem;
+        }
+
+        .flash-message {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+            font-size: 0.875rem;
+            background-color: #FEF3F2;
+            color: #B42318;
+            border: 1px solid #FEE4E2;
+            text-align: left;
+        }
+
+        @media (max-width: 640px) {
+            body {
+                padding: 1rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            .subtitle {
+                font-size: 1.125rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>链接转换器</h1>
+        <p class="subtitle">优雅地接入 DLUT WebVPN 服务</p>
+
+        <div class="card">
+            <div id="error-message" class="flash-message" style="display: none;"></div>
+
+            <div class="input-group">
+                <label for="url">输入网址</label>
+                <input type="text" 
+                       name="url" 
+                       id="url" 
+                       placeholder="https://example.com"
+                       required
+                       autocomplete="off"
+                       spellcheck="false">
+                <button onclick="handleSubmit(event)" type="button">获取 WebVPN 链接</button>
+            </div>
+
+            <div id="result" class="result" style="display: none;">
+                <div class="result-header">
+                    <span>转换结果</span>
+                    <button onclick="copyResult()" class="copy-button">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M8 17.929H6c-1.105 0-2-.912-2-2.036V5.036C4 3.912 4.895 3 6 3h8c1.105 0 2 .912 2 2.036v1.866m-6 .17h8c1.105 0 2 .91 2 2.035v10.857C20 21.088 19.105 22 18 22h-8c-1.105 0-2-.911-2-2.036V9.107c0-1.124.895-2.036 2-2.036z"/>
+                        </svg>
+                        复制链接
+                    </button>
+                </div>
+                <div class="result-text" id="result-text"></div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            © 2024 DLUT WebVPN · Rui
+        </footer>
+    </div>
+
+    <script>
+        async function handleSubmit(event) {
+            event.preventDefault();
+            const url = document.getElementById('url').value;
+            const errorMessage = document.getElementById('error-message');
+            const resultDiv = document.getElementById('result');
+            const resultText = document.getElementById('result-text');
+
+            try {
+                console.log('Sending request to:', '/api/convert');  // 调试日志
+                const response = await fetch('/api/convert', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({ url })
+                });
+
+                console.log('Response status:', response.status);  // 调试日志
+
+                if (response.ok) {
+                    const data = await response.json();
+                    errorMessage.style.display = 'none';
+                    resultDiv.style.display = 'block';
+                    resultText.textContent = data.result;
+                } else {
+                    const data = await response.json();
+                    errorMessage.textContent = data.error || '服务器错误，请稍后重试';
+                    errorMessage.style.display = 'block';
+                    resultDiv.style.display = 'none';
+                }
+            } catch (error) {
+                console.error('Error:', error);  // 调试日志
+                errorMessage.textContent = '服务器错误，请稍后重试';
+                errorMessage.style.display = 'block';
+                resultDiv.style.display = 'none';
+            }
+        }
+
+        function copyResult() {
+            const resultText = document.getElementById('result-text').innerText;
+            navigator.clipboard.writeText(resultText).then(() => {
+                const copyBtn = document.querySelector('.copy-button');
+                const originalText = copyBtn.innerHTML;
+                copyBtn.innerHTML = `
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M20 6L9 17l-5-5"/>
+                    </svg>
+                    已复制
+                `;
+                setTimeout(() => {
+                    copyBtn.innerHTML = originalText;
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
