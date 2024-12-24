@@ -1,3 +1,4 @@
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/LittlePorcupine/dlut-webvpn-web&project-name=dlut-webvpn-converter&repository-name=dlut-webvpn-converter)
 # DLUT WebVPN URL 转换器
 
 一个简单优雅的工具，用于将普通 URL 转换为大连理工大学 WebVPN 可访问的 URL。本项目的实现参考了 [ESWZY/webvpn-dlut](https://github.com/ESWZY/webvpn-dlut)，在其基础上进行了界面优化和功能改进。
